@@ -281,8 +281,8 @@ local f=function (x,y,z) return bit_or(bit_and(x,y),bit_and(-x-1,z)) end
 local g=function (x,y,z) return bit_or(bit_and(x,z),bit_and(y,-z-1)) end
 local h=function (x,y,z) return bit_xor(x,bit_xor(y,z)) end
 local i=function (x,y,z) return bit_xor(y,bit_or(x,-z-1)) end
-local z=function (fn,a,b,c,d,x,s,ac)
-  a=bit_and(a+fn(b,c,d)+x+ac,0xFFFFFFFF)
+local z=function (fm,a,b,c,d,x,s,ac)
+  a=bit_and(a+fm(b,c,d)+x+ac,0xFFFFFFFF)
   -- be *very* careful that left shift does not cause rounding!
   return bit_or(bit_lshift(bit_and(a,bit_rshift(0xFFFFFFFF,s)),s),bit_rshift(a,32-s))+b
 end
