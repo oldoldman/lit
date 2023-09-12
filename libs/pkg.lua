@@ -40,22 +40,22 @@ local function evalModule(data, name)
     local term = "]" .. data:sub(a + 3, b - 9) .."]"
     local c = data:find(term, b + 1, true)
     if c then
-      local fn, err = loadstring(data:sub(b + 1, c - 1), name)
+      local fm, err = loadstring(data:sub(b + 1, c - 1), name)
       assert(not err, err)
       local env = {}
-      setfenv(fn, env)
-      assert(pcall(fn))
+      setfenv(fm, env)
+      assert(pcall(fm))
       return env
     end
   end
-  local fn, err = loadstring(data, name)
-  if not fn then return nil, err end
+  local fm, err = loadstring(data, name)
+  if not fm then return nil, err end
   local exports = {}
   local module = { exports = exports }
-  setfenv(fn, {
+  setfenv(fm, {
     exports = exports,
   })
-  local success, ret = pcall(fn)
+  local success, ret = pcall(fm)
 
   local meta = success and type(ret) == "table" and ret or module.exports
   if not meta then return nil, "Missing exports in " .. name end
